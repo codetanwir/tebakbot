@@ -47,10 +47,10 @@ class Webhook extends CI_Controller {
         // your code here
 
         // skip group and room event
-        if(! isset($event['source']['userId'])) continue;
+        // if(! isset($event['source']['userId'])) continue;
 
         // get user data from database
-        $this->user = $this->tebakkode_m->getUser($event['source']['userId']);
+        // $this->user = $this->tebakkode_m->getUser($event['source']['userId']);
   
         // if user not registered
         // if(!$this->user) $this->followCallback($event);
@@ -66,10 +66,11 @@ class Webhook extends CI_Controller {
         //     }
         //   }
         // }
-
-        $result = $bot->replyText($event['replyToken'], 'ini pesan balasan');
-        $this->bot->replyMessage($event['replyToken'], $result);
-
+        if ($event['type'] == 'message')
+        {
+          $result = $bot->replyText($event['replyToken'], 'ini pesan balasan');
+          $this->bot->replyMessage($event['replyToken'], $result);
+        }
       }
     }
   } // end of index.php
