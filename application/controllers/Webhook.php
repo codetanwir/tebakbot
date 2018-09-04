@@ -47,30 +47,31 @@ class Webhook extends CI_Controller {
         // your code here
 
         // skip group and room event
-        // if(! isset($event['source']['userId'])) continue;
+        if(! isset($event['source']['userId'])) continue;
 
         // get user data from database
-        // $this->user = $this->tebakkode_m->getUser($event['source']['userId']);
+        $this->user = $this->tebakkode_m->getUser($event['source']['userId']);
   
         // if user not registered
-        // if(!$this->user) $this->followCallback($event);
-        // else {
-        //   // respond event
-        //   if($event['type'] == 'message'){
-        //     if(method_exists($this, $event['message']['type'].'Message')){
-        //       $this->{$event['message']['type'].'Message'}($event);
-        //     }
-        //   } else {
-        //     if(method_exists($this, $event['type'].'Callback')){
-        //       $this->{$event['type'].'Callback'}($event);
-        //     }
-        //   }
-        // }
-        if ($event['type'] == 'message')
-        {
-          $result = $bot->replyText($event['replyToken'], 'ini pesan balasan');
-          $this->bot->replyMessage($event['replyToken'], $result);
+        if(!$this->user) $this->followCallback($event);
+        else {
+          // respond event
+          if($event['type'] == 'message'){
+            if(method_exists($this, $event['message']['type'].'Message')){
+              $this->{$event['message']['type'].'Message'}($event);
+            }
+          } else {
+            if(method_exists($this, $event['type'].'Callback')){
+              $this->{$event['type'].'Callback'}($event);
+            }
+          }
         }
+
+        // if ($event['type'] == 'message')
+        // {
+        //   $result = $bot->replyText($event['replyToken'], 'ini pesan balasan');
+        //   $this->bot->replyMessage($event['replyToken'], $result);
+        // }
       }
     }
   } // end of index.php
