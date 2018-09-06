@@ -40,7 +40,7 @@ class Webhook extends CI_Controller {
     $this->events = json_decode($body, true);
 
     // log every event requests
-    $this->tebakkode_m->log_events($this->signature, $body);
+    // $this->tebakkode_m->log_events($this->signature, $body);
 
     if(is_array($this->events['events'])){
       foreach ($this->events['events'] as $event){
